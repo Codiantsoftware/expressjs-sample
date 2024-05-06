@@ -1,0 +1,180 @@
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: User signup API
+      produces:
+        - application/json
+      security:
+        - CsrfToken: []
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/user-signup"
+      responses:
+        "200":
+          description: OK
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      produces:
+        - application/json
+      security:
+        - CsrfToken: []
+      parameters:
+        - in: body
+          name: login
+          required: false
+          schema:
+            $ref: "#/definitions/user-login"
+      responses:
+        "200":
+          description: An object with user
+  /auth/me:
+    get:
+      tags:
+        - Auth
+      summary: My account information
+      produces:
+        - application/json
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: An object with user
+  /auth/logout:
+    get:
+      tags:
+        - Auth
+      summary: Logout user
+      security:
+        - BearerAuth: []
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: An object with user
+  /forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: User forgot password
+      produces:
+        - application/json
+      security:
+        - CsrfToken: []        
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/forget-password"
+      responses:
+        "200":
+          description: OK
+  /reset-password:
+    post:
+      tags:
+        - Auth
+      summary: User resets password
+      produces:
+        - application/json
+      security:
+        - CsrfToken: []        
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/reset-password"
+      responses:
+        "200":
+          description: OK
+  /change-password:
+    post:
+      tags:
+        - Auth
+      summary: User change password
+      security:
+        - BearerAuth: []
+        - CsrfToken: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/change-password"
+      responses:
+        "200":
+          description: OK
+
+definitions:
+  user-signup:
+    type: object
+    properties:
+      firstName:
+        type: string
+        required: true
+      lastName:
+        type: string
+        required: true
+      phoneNumber:
+        type: string
+        required: true
+      email:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+      confirmPassword:
+        type: string
+        required: true
+  forget-password:
+    type: object
+    properties:
+      emailOrMobile:
+        type: string
+        required: true
+  reset-password:
+    type: object
+    properties:
+      token:
+        type: string
+        required: true
+      newPassword:
+        type: string
+        required: true
+      confirmPassword:
+        type: string
+        required: true
+  change-password:
+    type: object
+    properties:
+      currentPassword:
+        type: string
+        required: true
+      newPassword:
+        type: string
+        required: true
+      confirmPassword:
+        type: string
+        required: true
+  user-login:
+    type: object
+    properties:
+      email:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+      
+
